@@ -21,7 +21,12 @@
     "@tailwindcss/postcss": "^4.1.17",
     "apexcharts": "^4.7.0",
     "autoprefixer": "^10.4.22",
+    "autotable": "^1.0.0",
+    "dotenv": "^17.4.2",
     "flatpickr": "^4.6.13",
+    "jspdf": "^4.2.1",
+    "jspdf-autotable": "^5.0.7",
+    "mysql2": "^3.22.2",
     "next": "^16.1.6",
     "react": "^19.2.0",
     "react-apexcharts": "^1.8.0",
@@ -29,8 +34,10 @@
     "react-dnd-html5-backend": "^16.0.1",
     "react-dom": "^19.2.0",
     "react-dropzone": "^14.3.8",
+    "recharts": "^3.8.1",
     "swiper": "^11.2.10",
-    "tailwind-merge": "^2.6.0"
+    "tailwind-merge": "^2.6.0",
+    "xlsx": "^0.18.5"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3.3.1",

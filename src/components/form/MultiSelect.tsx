@@ -24,6 +24,11 @@ const MultiSelect: React.FC<MultiSelectProps> = ({
   const [selectedOptions, setSelectedOptions] =
     useState<string[]>(defaultSelected);
   const [isOpen, setIsOpen] = useState(false);
+  const [searchTerm, setSearchTerm] = useState("");
+
+  const filteredOptions = options.filter(option => 
+    option.text.toLowerCase().includes(searchTerm.toLowerCase())
+  );
 
   const toggleDropdown = () => {
     if (disabled) return;
@@ -130,30 +135,43 @@ const MultiSelect: React.FC<MultiSelectProps> = ({
 
           {isOpen && (
             <div
-              className="absolute left-0 z-40 w-full overflow-y-auto bg-white rounded-lg shadow-sm top-full max-h-select dark:bg-gray-900"
+              className="absolute left-0 z-40 w-full overflow-y-auto bg-white rounded-lg shadow-sm top-full max-h-60 dark:bg-gray-900 border border-gray-200 dark:border-gray-800"
               onClick={(e) => e.stopPropagation()}
             >
+              <div className="p-2 sticky top-0 bg-white dark:bg-gray-900 z-10 border-b border-gray-200 dark:border-gray-800">
+                <input
+                  type="text"
+                  placeholder="Search..."
+                  value={searchTerm}
+                  onChange={(e) => setSearchTerm(e.target.value)}
+                  className="w-full rounded-md border border-gray-300 px-3 py-2 text-sm outline-none focus:border-brand-500 focus:ring-1 focus:ring-brand-500 dark:border-gray-700 dark:bg-gray-800 dark:text-white"
+                />
+              </div>
               <div className="flex flex-col">
-                {options.map((option, index) => (
-                  <div key={index}>
-                    <div
-                      className={`hover:bg-primary/5 w-full cursor-pointer rounded-t border-b border-gray-200 dark:border-gray-800`}
-                      onClick={() => handleSelect(option.value)}
-                    >
+                {filteredOptions.length > 0 ? (
+                  filteredOptions.map((option, index) => (
+                    <div key={index}>
                       <div
-                        className={`relative flex w-full items-center p-2 pl-2 ${
-                          selectedOptions.includes(option.value)
-                            ? "bg-primary/10"
-                            : ""
-                        }`}
+                        className={`hover:bg-brand-50 w-full cursor-pointer rounded-t border-b border-gray-200 dark:border-gray-800 dark:hover:bg-white/5`}
+                        onClick={() => handleSelect(option.value)}
                       >
-                        <div className="mx-2 leading-6 text-gray-800 dark:text-white/90">
-                          {option.text}
+                        <div
+                          className={`relative flex w-full items-center p-2 pl-2 ${
+                            selectedOptions.includes(option.value)
+                              ? "bg-brand-50 dark:bg-white/5"
+                              : ""
+                          }`}
+                        >
+                          <div className="mx-2 leading-6 text-gray-800 dark:text-white/90">
+                            {option.text}
+                          </div>
                         </div>
                       </div>
                     </div>
-                  </div>
-                ))}
+                  ))
+                ) : (
+                  <div className="p-3 text-sm text-center text-gray-500">No results found</div>
+                )}
               </div>
             </div>
           )}
